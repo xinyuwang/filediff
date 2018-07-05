@@ -1,0 +1,26 @@
+﻿{
+  "name": "filediff",
+  "version": "1.0.0",
+  "description": "A cross-platform-cli/nodejs-lib for collecting differences between two files/directories.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xinyuwang/filediff.git"
+  },
+  "keywords": [
+    "filediff"
+  ],
+  "author": "Xinyu Wang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xinyuwang/filediff/issues"
+  },
+  "homepage": "https://github.com/xinyuwang/filediff#readme",
+  "dependencies": {
+    "minimatch": "^3.0.4",
+    "yargs": "^12.0.1"
+  }
+}
