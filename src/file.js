@@ -1,8 +1,8 @@
-﻿const fs = require('fs');
+﻿"use strict";
+
+const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-
-import FileDiff from './filediff';
 
 class File {
 
@@ -30,10 +30,6 @@ class File {
 
     }
 
-    compare(f) {
-        return new FileDiff(this, f);
-    }
-
     md5() {
         if (this.md5 != '') {
             let buf = fs.readFileSync(this.absFilepath);
@@ -57,3 +53,5 @@ class File {
     }
 
 };
+
+module.exports = File;
