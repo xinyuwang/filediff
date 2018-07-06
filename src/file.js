@@ -25,25 +25,29 @@ class File {
         this.mtime = stat.mtime;
         this.birthtime = stat.birthtime;
 
-        this.md5 = '';
-        this.sha256 = '';
+        this._md5 = '';
+        this._sha256 = '';
 
     }
 
-    md5() {
-        if (this.md5 != '') {
+    get md5() {
+        if (this._md5 == '') {
             let buf = fs.readFileSync(this.absFilepath);
-            this.md5 = this.crypto.createHash('md5').update(buf).digest('hex');
+            this._md5 = crypto.createHash('md5').update(buf).digest('hex');
         }
-        return this.md5;
+        return this._md5;
     }
 
-    sha256() {
-        if (this.sha256 != '') {
+    get sha256() {
+        if (this._sha256 == '') {
             let buf = fs.readFileSync(this.absFilepath);
-            this.sha256 = this.crypto.createHash('sha256').update(buf).digest('hex');
+            this._sha256 = crypto.createHash('sha256').update(buf).digest('hex');
         }
-        return this.sha256;
+        return this._sha256;
+    }
+
+    update() {
+        return new File(this.filepath);
     }
 
     collect(cfg) {
