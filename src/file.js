@@ -47,13 +47,21 @@ class File {
     }
 
     update() {
+
+        if (!fs.existsSync(this.absFilepath)) {
+            return null;
+        }
+
         return new File(this.filepath);
     }
 
-    collect(cfg) {
+    static open(filepath) {
 
-        const { glob = '*', regex = '.*', recursive = true, digest = 'sha256', size = [-1, -1] } = cfg;
+        if (!fs.existsSync(path.resolve(filepath))) {
+            return null;
+        }
 
+        return new File(filepath);
     }
 
 };
