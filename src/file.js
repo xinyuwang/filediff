@@ -4,27 +4,59 @@ const crypto = require('crypto');
 
 class File {
 
-    constructor(filepath) {
+    constructor(f) {
 
-        this.filepath = filepath;
-        this.absFilepath = path.resolve(filepath);
+        if (typeof f === 'string') {
 
-        if (!fs.existsSync(this.absFilepath)) {
-            throw new Error('file not existed');
+            this.filepath = f;
+            this.absFilepath = path.resolve(f);
+
+            if (!fs.existsSync(this.absFilepath)) {
+                throw new Error('file not existed');
+            }
+
+            let stat = fs.statSync(this.absFilepath);
+
+            if (!stat.isFile()) {
+                throw new Error('not a regular file');
+            }
+
+            this.size = stat.size;
+            this.mtime = stat.mtime;
+            this.btime = stat.birthtime;
+
+            this._md5 = '';
+            this._sha256 = '';
+
+        } else {
+
+            if (f['filepath'] == undefined) {
+                throw new Error('not an available File Json');
+            }
+
+            this.filepath = f.filepath;
+            this.absFilepath = f.absFilepath;
+            this.size = f.size;
+            this.mtime = f.mtime;
+            this.btime = f.btime;
+            this._md5 = this.md5;
+            this._sha256 = this._sha256;
+
         }
 
-        let stat = fs.statSync(this.absFilepath);
+    }
 
-        if (!stat.isFile()) {
-            throw new Error('not a regular file');
+    toJson() {
+
+        return {
+            filepath: this.filepath,
+            absFilepath: this.absFilepath,
+            size: this.size,
+            mtime: this.mtime,
+            btime: this.btime,
+            md5: this._md5,
+            sha256: this._sha256
         }
-
-        this.size = stat.size;
-        this.mtime = stat.mtime;
-        this.birthtime = stat.birthtime;
-
-        this._md5 = '';
-        this._sha256 = '';
 
     }
 
