@@ -9,8 +9,9 @@ class Dir {
 
         if (typeof p === 'string') {
 
-            this.path = p;
+            this.path = path.normalize(p);
             this.absPath = path.resolve(p);
+            this.dirname = path.basename(this.absPath);
 
             if (!fs.existsSync(this.absPath)) {
                 throw new Error('path not existed');
@@ -18,7 +19,7 @@ class Dir {
 
             let stat = fs.statSync(this.absPath);
 
-            this.childrens = [];
+            this.childrens = new Map();
             this.file = null;
             this.isDirectory = stat.isDirectory();
 
@@ -26,7 +27,8 @@ class Dir {
 
                 let arr = fs.readdirSync(this.absPath);
                 arr.forEach(item => {
-                    this.childrens.push(new Dir(`${this.path}${item}${path.sep}`));
+                    let child = new Dir(`${this.path}${item}${path.sep}`);
+                    this.childrens.set(child.dirname, child);
                 })
 
             } else {
@@ -45,12 +47,13 @@ class Dir {
             this.path = p.path;
             this.absPath = p.absPath;
             this.isDirectory = p.isDirectory;
-            this.childrens = [];
+            this.childrens = new Map();
             this.file = null;
 
             if (p.isDirectory) {
-                p.childrens.forEach(dir => {
-                    this.childrens.push(new Dir(dir));
+                p.childrens.forEach(dirJson => {
+                    let dir = new Dir(dirJson);
+                    this.childrens.set(dir.dirname, dir);
                 })
             }
             else {
@@ -76,8 +79,8 @@ class Dir {
 
         if (this.isDirectory) {
 
-            this.childrens.forEach(dir => {
-                res.childrens.push(dir.toJson());
+            this.childrens.forEach(value => {
+                res.childrens.push(value.toJson());
             })
 
         } else {
@@ -85,6 +88,8 @@ class Dir {
             res.file = this.file.toJson();
 
         }
+
+        return res;
 
     }
 

@@ -1,13 +1,11 @@
-﻿
-const Dir = require('./dir');
+﻿const Dir = require('./dir');
 const File = require('./file');
 
+class DirDiff {
 
-export default class FileDiff {
-
-    constructor(f1, f2) {
-        this.f1 = f1;
-        this.f2 = f2;
+    constructor(d1, d2) {
+        this.d1 = d1;
+        this.d2 = d2;
     }
 
     test({ size = true, sha256 = true, md5 = false, btime = true, mtime = true } = {}) {
@@ -66,11 +64,3 @@ export default class FileDiff {
 }
 
 module.exports = FileDiff;
-
-
-
-collect({}) {
-
-    const { glob = '*', regex = '.*', recursive = true, digest = 'sha256', size = [-1, -1] } = cfg;
-
-}

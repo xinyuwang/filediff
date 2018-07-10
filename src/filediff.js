@@ -1,14 +1,19 @@
 ﻿const File = require('./file');
 
-
-export default class FileDiff {
+class FileDiff {
 
     constructor(f1, f2) {
         this.f1 = f1;
         this.f2 = f2;
     }
 
-    test({ size = true, sha256 = true, md5 = false, btime = true, mtime = true } = {}) {
+    test({ name = true, size = true, sha256 = true, md5 = false, btime = true, mtime = true } = {}) {
+
+        if (name) {
+            if (this.f1.filename != this.f2.filename) {
+                return false;
+            }
+        }
 
         if (size) {
             if (this.f1.size != this.f2.size) {

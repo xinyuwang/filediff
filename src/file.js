@@ -8,7 +8,7 @@ class File {
 
         if (typeof f === 'string') {
 
-            this.filepath = f;
+            this.filepath = path.normalize(f);
             this.absFilepath = path.resolve(f);
             this.filename = path.basename(f);
 
