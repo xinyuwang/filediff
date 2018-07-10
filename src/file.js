@@ -84,16 +84,7 @@ class File {
 
         return new File(this.filepath);
     }
-
-    static open(filepath) {
-
-        if (!fs.existsSync(path.resolve(filepath))) {
-            return null;
-        }
-
-        return new File(filepath);
-    }
-
+    
 };
 
 module.exports = File;

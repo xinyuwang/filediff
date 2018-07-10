@@ -7,7 +7,7 @@ let filepath = `./${argv.$0}`;
 console.log('------');
 Time.diff();
 
-let f = File.open(filepath);
+let f = new File(filepath);
 Time.diffp('Constructor:%u', console.log);
 
 let md5 = f.md5;
