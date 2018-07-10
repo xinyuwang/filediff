@@ -10,7 +10,7 @@ class Dir {
         if (typeof p === 'string') {
 
             this.path = p;
-            this.absPath = path.resolve(f);
+            this.absPath = path.resolve(p);
 
             if (!fs.existsSync(this.absPath)) {
                 throw new Error('path not existed');
@@ -25,8 +25,8 @@ class Dir {
             if (this.isDirectory) {
 
                 let arr = fs.readdirSync(this.absPath);
-                arr.forEach(path => {
-                    this.childrens.push(new Dir(path));
+                arr.forEach(item => {
+                    this.childrens.push(new Dir(`${this.path}${item}${path.sep}`));
                 })
 
             } else {
@@ -68,7 +68,7 @@ class Dir {
 
             path: this.path,
             absPath: this.absPath,
-            isDirectory = this.isDirectory,
+            isDirectory: this.isDirectory,
             childrens: [],
             file: {}
 
@@ -98,3 +98,5 @@ class Dir {
     }
 
 }
+
+module.exports = Dir;

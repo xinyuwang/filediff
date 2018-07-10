@@ -10,6 +10,7 @@ class File {
 
             this.filepath = f;
             this.absFilepath = path.resolve(f);
+            this.filename = path.basename(f);
 
             if (!fs.existsSync(this.absFilepath)) {
                 throw new Error('file not existed');
@@ -36,6 +37,7 @@ class File {
 
             this.filepath = f.filepath;
             this.absFilepath = f.absFilepath;
+            this.filename = f.filename;
             this.size = f.size;
             this.mtime = f.mtime;
             this.btime = f.btime;
@@ -51,6 +53,7 @@ class File {
         return {
             filepath: this.filepath,
             absFilepath: this.absFilepath,
+            filename: this.filename,
             size: this.size,
             mtime: this.mtime,
             btime: this.btime,
@@ -84,7 +87,7 @@ class File {
 
         return new File(this.filepath);
     }
-    
+
 };
 
 module.exports = File;
