@@ -48,7 +48,7 @@ class File {
 
     }
 
-    toJson() {
+    toJson({ md5 = false, sha256 = false } = {}) {
 
         return {
             filepath: this.filepath,
@@ -57,8 +57,8 @@ class File {
             size: this.size,
             mtime: this.mtime,
             btime: this.btime,
-            md5: this._md5,
-            sha256: this._sha256
+            md5: md5 ? this.md5 : this._md5,
+            sha256: sha256 ? this.sha256 : this._sha256
         }
 
     }

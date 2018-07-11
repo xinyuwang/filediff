@@ -65,12 +65,13 @@ class Dir {
 
     }
 
-    toJson() {
+    toJson({ md5 = false, sha256 = false } = {}) {
 
         let res = {
 
             path: this.path,
             absPath: this.absPath,
+            dirname: this.dirname,
             isDirectory: this.isDirectory,
             childrens: [],
             file: {}
@@ -80,12 +81,12 @@ class Dir {
         if (this.isDirectory) {
 
             this.childrens.forEach(value => {
-                res.childrens.push(value.toJson());
+                res.childrens.push(value.toJson({ md5, sha256 }));
             })
 
         } else {
 
-            res.file = this.file.toJson();
+            res.file = this.file.toJson({ md5, sha256 });
 
         }
 
