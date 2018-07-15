@@ -1,5 +1,6 @@
 ﻿const Dir = require('./dir');
 const File = require('./file');
+const FileDiff = require('./filediff');
 
 class DirDiff {
 
@@ -12,7 +13,7 @@ class DirDiff {
 
     }
 
-    tell() {
+    tell({ name = true, size = true, sha256 = true, md5 = false, btime = true, mtime = true } = {}) {
 
         let less = [], more = [], diff = [];
 
@@ -23,10 +24,30 @@ class DirDiff {
             if (this.d2.isDirectory == false) {
 
                 //just compare and output to diff
-                if()
+                let res = FileDiff.compare(this.d1, this.d2).tell({ name, size, sha256, md5, btime, mtime });
+                res.f1 = this.d1.file;
+                res.f2 = this.d2.file;
+                diff.push(res);
+
+            }
+            else {
+
+                //d2 is a directory
+                less.push(this.d2.toJson({ sha256, md5 }));
+                more.push(this.d1.file.toJson({ sha256, md5 }));
 
             }
 
+        }
+        else {//d1 is a directory
+
+            //d2 is a file
+            if (this.d2.isDirectory == false) {
+
+                less.push(this.d2.file.toJson({ sha256, md5 }));
+                more.push(this.d1.toJson({ sha256, md5 }));
+
+            }
 
         }
 

@@ -9,56 +9,60 @@ class FileDiff {
 
     test({ name = true, size = true, sha256 = true, md5 = false, btime = true, mtime = true } = {}) {
 
+        return tell({ name, size, sha256, md5, btime, mtime }).isEqual;
+
+    }
+
+    tell({ name = true, size = true, sha256 = true, md5 = false, btime = true, mtime = true } = {}) {
+
+        let isEqual = true;
+        let diff = {};
+
         if (name) {
             if (this.f1.filename != this.f2.filename) {
-                return false;
+                isEqual = false;
+                diff['filename'] = [this.f1.filename, this.f2.filename];
             }
         }
 
         if (size) {
             if (this.f1.size != this.f2.size) {
-                return false;
+                isEqual = false;
+                diff['size'] = [this.f1.size, this.f2.size];
             }
         }
 
         if (sha256) {
             if (this.f1.sha256 != this.f2.sha256) {
-                return false;
+                isEqual = false;
+                diff['sha256'] = [this.f1.sha256, this.f2.sha256];
             }
         }
 
         if (md5) {
             if (this.f1.md5 != this.f2.md5) {
-                return false;
+                isEqual = false;
+                diff['md5'] = [this.f1.md5, this.f2.md5];
             }
         }
 
         if (btime) {
             if (this.f1.btime != this.f2.btime) {
-                return false;
+                isEqual = false;
+                diff['btime'] = [this.f1.btime, this.f2.btime];
             }
         }
 
         if (mtime) {
             if (this.f1.mtime != this.f2.mtime) {
-                return false;
+                isEqual = false;
+                diff['mtime'] = [this.f1.mtime, this.f2.mtime];
             }
         }
 
-        return true;
-    }
-
-    tell() {
-
         return {
-            path: [this.f1.filepath, this.f2.filepath],
-            absPath: [this.f1.absFilepath, this.f2.absFilepath],
-            filename: [this.f1.filename, this.f2.filename],
-            size: [this.f1.size, this.f2.size],
-            sha256: [this.f1.sha256, this.f2.sha256],
-            md5: [this.f1.md5, this.f2.md5],
-            btime: [this.f1.btime, this.f2.btime],
-            mtime: [this.f1.mtime, this.f2.mtime]
+            isEqual: isEqual,
+            diff: diff
         }
 
     }
