@@ -7,12 +7,6 @@ class FileDiff {
         this.f2 = f2;
     }
 
-    test({ name = true, size = true, sha256 = true, md5 = false, btime = true, mtime = true } = {}) {
-
-        return tell({ name, size, sha256, md5, btime, mtime }).isEqual;
-
-    }
-
     tell({ name = true, size = true, sha256 = true, md5 = false, btime = true, mtime = true } = {}) {
 
         let isEqual = true;
@@ -60,10 +54,7 @@ class FileDiff {
             }
         }
 
-        return {
-            isEqual: isEqual,
-            diff: diff
-        }
+        return { isEqual, diff }
 
     }
 

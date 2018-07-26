@@ -9,11 +9,6 @@ class DirDiff {
         this.d2 = d2;
     }
 
-    test({ name = true, size = true, sha256 = true, md5 = false, btime = true, mtime = true } = {}) {
-        let { less, more, diff } = tell(name, size, sha256, md5, btime, mtime);
-
-    }
-
     tell({ name = true, size = true, sha256 = true, md5 = false, btime = true, mtime = true } = {}) {
 
         let less = [], more = [], diff = [];
@@ -87,6 +82,8 @@ class DirDiff {
 
 
         }
+
+        let isEqual = (less.length + more.length + diff.length == 0);
 
         return { less, more, diff };
 
